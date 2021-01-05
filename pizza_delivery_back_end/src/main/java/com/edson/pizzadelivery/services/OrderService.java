@@ -14,6 +14,8 @@ import java.time.Instant;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static com.edson.pizzadelivery.entities.Order.*;
+
 /**
  * OrderService
  *
@@ -46,7 +48,7 @@ public class OrderService {
                 , dto.getLatitude()
                 , dto.getLongitude()
                 , Instant.now()
-                , Order.OrderStatus.PENDING);
+                , OrderStatus.PENDING);
 
         for (ProductDTO productDTO : dto.getProducts()) {
             Product product = productRepository.getOne(productDTO.getId());
@@ -56,5 +58,15 @@ public class OrderService {
         order = orderRepository.save(order);
 
         return new OrderDTO(order);
+    }
+
+    @Transactional(readOnly = true)
+    public OrderDTO setDelivered(Long id) {
+        Order order = orderRepository.getOne(id);
+        order.setStatus(OrderStatus.DELIVERED);
+
+        Order orderSaved = orderRepository.save(order);
+
+        return new OrderDTO(orderSaved);
     }
 }

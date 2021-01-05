@@ -53,10 +53,6 @@ public class OrderDTO implements Serializable {
                 .collect(Collectors.toList());
     }
 
-    public static long getSerialVersionUID() {
-        return serialVersionUID;
-    }
-
     public Long getId() {
         return id;
     }
