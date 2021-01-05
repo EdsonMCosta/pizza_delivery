@@ -26,7 +26,7 @@ public class OrderDTO implements Serializable {
     private Instant moment;
     private Order.OrderStatus status;
 
-    private List<ProductDTO> productDTOS = new ArrayList<>();
+    private List<ProductDTO> products = new ArrayList<>();
 
     public OrderDTO() {
     }
@@ -47,9 +47,9 @@ public class OrderDTO implements Serializable {
         longitude = order.getLongitude();
         moment = order.getMoment();
         status = order.getStatus();
-        productDTOS = order.getProducts()
+        products = order.getProducts()
                 .stream()
-                .map(ProductDTO::new)
+                .map(x -> new ProductDTO(x))
                 .collect(Collectors.toList());
     }
 
@@ -105,7 +105,7 @@ public class OrderDTO implements Serializable {
         this.status = status;
     }
 
-    public List<ProductDTO> getProductDTOS() {
-        return productDTOS;
+    public List<ProductDTO> getProducts() {
+        return products;
     }
 }
